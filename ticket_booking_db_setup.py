@@ -2,6 +2,8 @@ from sqlalchemy import create_engine, ForeignKey
 
 from sqlalchemy import Column, Date, Integer, String, VARCHAR
 
+from sqlalchemy.orm import relationship
+
 from sqlalchemy.ext.declarative import declarative_base
 
 
@@ -31,20 +33,23 @@ class events(Base):
 class tickets(Base):
 	__tablename__ = "ticket_details"
 
-	ticket_id = Column(VARCHAR)
+	ticket_id = Column(VARCHAR, primary_key = True)
 
 	
-	event_title = Column(VARCHAR)
+	event_title = Column(VARCHAR, ForeignKey("event_details.event_name"))
+	event_title = relationship('events')
 	
 	customer_name = Column(String)
 
 	customer_email = Column(String)
 
-	begin_id = Column(Date)
-	
+	begin_id = Column(Date, ForeignKey("event_details.start_date"))
+	begin = relationship('events')
 
-	end_id = Column(Date)
-	
+	end_id = Column(Date, ForeignKey("event_details.end_date"))
+	end = relationship('events')
+
+
 
 	
 
