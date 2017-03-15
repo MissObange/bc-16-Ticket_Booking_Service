@@ -7,51 +7,41 @@ from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
 
-engine = create_engine('sqlite:///ticket_booking.db', echo=True)
+engine = create_engine('sqlite:///ticket_booking_database.db')
 
 Base = declarative_base()
 
 
-class events(Base):
+class event_details(Base):
 
-    __tablename__ = "event_details"
+    __tablename__ = "events"
 
-    event_id = Column(VARCHAR, primary_key=True)
+    event_id = Column(Integer, primary_key=True)
 
-    event_name = Column(VARCHAR)
+    event_name = Column(VARCHAR(50))
 
     start_date = Column(Date)
 
     end_date = Column(Date)
 
-    venue = Column(VARCHAR)
+    venue = Column(VARCHAR(50))
 
 
     
 
 
-class tickets(Base):
-	__tablename__ = "ticket_details"
+class ticket_details(Base):
+	__tablename__ = "tickets"
 
-	ticket_id = Column(VARCHAR, primary_key = True)
 
+	ticket_id = Column(Integer, primary_key = True)
+
+	event_id = Column(Integer, ForeignKey("events.event_id"))
+	event = relationship('event_details', backref= 'events')
 	
-	event_title = Column(VARCHAR, ForeignKey("event_details.event_name"))
-	event_title = relationship('events')
-	
-	customer_name = Column(String)
+	customer_name = Column(String(50))
 
-	customer_email = Column(String)
-
-	begin_id = Column(Date, ForeignKey("event_details.start_date"))
-	begin = relationship('events')
-
-	end_id = Column(Date, ForeignKey("event_details.end_date"))
-	end = relationship('events')
-
-
-
-	
+	customer_email = Column(VARCHAR(50))
 
 
 
