@@ -45,7 +45,7 @@ class New_events():
 		to_delete = session.query(Event_details).filter_by(event_id = eventID).first()
 		session.delete(to_delete)
 		session.commit()
-		return('Successfully deleted!')
+		return('Entry successfully deleted!')
 
 	def event_edit(event_ID):
 		to_edit = session.query(Event_details).filter_by(event_id = event_ID).first()
@@ -73,12 +73,27 @@ class New_events():
 
 
 class New_tickets(New_events):
-	def ticket_generate(self, eventID, customer_name, customer_email):
+	def generate_ticket(self, eventID, customerName, customerEmail):
+
 		session.query(Event_details).filter_by(event_id =eventID).first()
-		tickets = Ticket_details(event_id = eventID, customer_name= customerName, customer_email = customerEmail)
-		session.add(tickets)
+		ticket = Ticket_details(event_id = eventID, customer_name= customerName, customer_email = customerEmail)
+		session.add(ticket)
 		session.commit()
 		return "Ticket has been succesfully generated"
+
+	def event_view():
+		event_view = session.query(Ticket_details).all()
+		tickets_list = []
+
+		for item in event_view:
+			ticket = [item.ticket_id, item.customer_name, item.customer_email]
+			tickets_list.append(ticket)
+
+			if len(tickets_list)==0:
+				return ("There are currently no tickets generated for this event")
+
+			
+		return tickets_list
 		
 
 
