@@ -6,7 +6,8 @@ Usage:
     my_app delete_event 
     my_app edit_event <event_id>
     my_app view_tickets <event_id>
-    my_app generate_ticket 
+    my_app ticket_generate 
+    my_app view_event_tickets
     my_app (-i | --interactive)
     my_app (-h | --help)
 Options:
@@ -69,8 +70,8 @@ class Event_actions(cmd.Cmd):
         eventVenue = input("Venue:")
 
         add_new_event = New_events()
-        add_new_event.event_create(eventName, startDate, endDate, eventVenue)
-        print("Events successfully created")
+        print(add_new_event.event_create(eventName, startDate, endDate, eventVenue))
+        
 
     @docopt_cmd
     def do_list_events(self, arg):
@@ -85,7 +86,7 @@ class Event_actions(cmd.Cmd):
                 delete_event 
         """
         eventID = input("Event_id")
-        New_events.event_delete(eventID)
+        print(New_events.event_delete(eventID))
 
    
     @docopt_cmd
@@ -96,15 +97,22 @@ class Event_actions(cmd.Cmd):
         print(New_events.event_edit(arg["<event_id>"]))
 
     @docopt_cmd
-    def do_generate_ticket(self, arg):
+    def do_ticket_generate(self, arg):
         """Usage: 
-            generate_event 
+            ticket_generate 
         """
         eventID = input("Enter event ID:  ")
         customerName = input("Customer Name:  ")
         customerEmail = input("Customer_email:  ")
-        print(New_tickets.ticket_generate(eventID, customerName, customerEmail))
+        new_ticket= New_tickets()
+        print(new_ticket.generate_ticket(eventID, customerName, customerEmail))
 
+    @docopt_cmd
+    def do_view_event_tickets(self, arg):
+        """Usage: 
+            view_event_tickets 
+        """
+        print(tabulate(New_tickets.event_view(), headers =("Ticket ID", "Customer Name", "Customer e-mail"), tablefmt = "orgtbl"))
 
 
     def do_quit(self, arg):
