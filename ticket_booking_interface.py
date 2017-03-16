@@ -6,6 +6,7 @@ Usage:
     my_app delete_event 
     my_app edit_event <event_id>
     my_app view_tickets <event_id>
+    my_app generate_ticket 
     my_app (-i | --interactive)
     my_app (-h | --help)
 Options:
@@ -16,7 +17,7 @@ Options:
 import sys
 import cmd
 from docopt import docopt, DocoptExit
-from ticket_booking_functions import New_events
+from ticket_booking_functions import New_events, New_tickets
 from tabulate import tabulate
 
 
@@ -90,9 +91,19 @@ class Event_actions(cmd.Cmd):
     @docopt_cmd
     def do_edit_event(self, arg):
         """Usage: 
-            edit_event <event_id> 
+            edit_event 
         """
         print(New_events.event_edit(arg["<event_id>"]))
+
+    @docopt_cmd
+    def do_generate_ticket(self, arg):
+        """Usage: 
+            generate_event 
+        """
+        eventID = input("Enter event ID:  ")
+        customerName = input("Customer Name:  ")
+        customerEmail = input("Customer_email:  ")
+        print(New_tickets.ticket_generate(eventID, customerName, customerEmail))
 
 
 
