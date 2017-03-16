@@ -81,8 +81,8 @@ class New_tickets(New_events):
 		session.commit()
 		return "Ticket has been succesfully generated"
 
-	def event_view():
-		event_view = session.query(Ticket_details).all()
+	def event_view(eventID):
+		event_view = session.query(Ticket_details).filter_by(event_id = eventID)
 		tickets_list = []
 
 		for item in event_view:
