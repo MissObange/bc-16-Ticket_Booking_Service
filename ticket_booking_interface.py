@@ -1,9 +1,7 @@
 #!venv/bin/python
 """
-This example uses docopt with the built in cmd module to demonstrate an
-interactive command application.
 Usage:
-    my_app add_event <event_name>
+    my_app add_event 
     my_app list_events
     my_app delete_event <event_id>
     my_app edit_event <event_id>
@@ -61,12 +59,12 @@ class Event_actions(cmd.Cmd):
     @docopt_cmd
     def do_add_event(self, arg):
         """Usage:
-                add_event <event_name>
+                add_event
         """
-        eventName= arg["<event_name>"]
-        startDate= input("Enter the event start date in the format mm/dd/yy: ")
-        endDate= input("Enter the event end date in the format mm/dd/yy: ")
-        eventVenue = input("enter the event venue:")
+        eventName= input("Event name: ")
+        startDate= input("Start date(mm/dd/yy): ")
+        endDate= input("End date (mm/dd/yy): ")
+        eventVenue = input("Venue:")
 
         add_new_event = New_events()
         print (add_new_event.add_events(eventName, startDate, endDate, eventVenue))
@@ -104,7 +102,8 @@ class Event_actions(cmd.Cmd):
     def do_quit(self, arg):
         """Quits out of Interactive Mode."""
 
-        print('Good Bye!')
+        print('     Thank you for using Ticket Booking Service system')
+        print('                         Goodbye')
         exit()
 
 
