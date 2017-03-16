@@ -68,7 +68,7 @@ class Event_actions(cmd.Cmd):
         eventVenue = input("Venue:")
 
         add_new_event = New_events()
-        add_new_event.add_events(eventName, startDate, endDate, eventVenue)
+        add_new_event.event_create(eventName, startDate, endDate, eventVenue)
         print("Events successfully created")
 
     @docopt_cmd
@@ -76,7 +76,7 @@ class Event_actions(cmd.Cmd):
         """Usage:
                 list_events 
         """
-        print(tabulate(New_events.view_events_list(), headers =("Event ID", "Event Name", "Start Date", "End Date", "Venue"), tablefmt = "orgtbl"))
+        print(tabulate(New_events.event_list(), headers =("Event ID", "Event Name", "Start Date", "End Date", "Venue"), tablefmt = "orgtbl"))
 
     @docopt_cmd
     def do_delete_event(self, arg):
@@ -84,10 +84,15 @@ class Event_actions(cmd.Cmd):
                 delete_event 
         """
         eventID = input("Event_id")
-        New_events.delete_event(eventID)
+        New_events.event_delete(eventID)
 
    
-        
+    @docopt_cmd
+    def do_edit_event(self, arg):
+        """Usage: 
+            edit_event <event_id> 
+        """
+        print(New_events.event_edit(arg["<event_id>"]))
 
 
 
