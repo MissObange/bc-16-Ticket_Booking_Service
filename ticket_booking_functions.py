@@ -71,7 +71,19 @@ class New_events():
 		session.commit()
 		return "Successfully edited"
 
+
+class New_tickets(New_events):
+	def ticket_generate(self, eventID, customer_name, customer_email):
+		session.query(Event_details).filter_by(event_id =eventID).first()
+		tickets = Ticket_details(event_id = eventID, customer_name= customerName, customer_email = customerEmail)
+		session.add(tickets)
+		session.commit()
+		return "Ticket has been succesfully generated"
+		
+
+
 New_events()
+New_tickets()
 
 
 	
