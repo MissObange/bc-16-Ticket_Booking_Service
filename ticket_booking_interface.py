@@ -2,7 +2,7 @@
 """
 Usage:
     my_app add_event 
-    my_app list_events
+    my_app list_events 
     my_app delete_event <event_id>
     my_app edit_event <event_id>
     my_app view_tickets <event_id>
@@ -17,6 +17,7 @@ import sys
 import cmd
 from docopt import docopt, DocoptExit
 from ticket_booking_functions import New_events
+from tabulate import tabulate
 
 
 
@@ -67,35 +68,41 @@ class Event_actions(cmd.Cmd):
         eventVenue = input("Venue:")
 
         add_new_event = New_events()
-        print (add_new_event.add_events(eventName, startDate, endDate, eventVenue))
+        add_new_event.add_events(eventName, startDate, endDate, eventVenue)
+        print("Events successfully created")
 
     @docopt_cmd
     def do_list_events(self, arg):
         """Usage:
-                list_events
+                list_events 
         """
-        print(subtraction(arg['<numberA>'], arg['<numberB>']))
+        print(tabulate(New_events.view_events_list(), headers =("Event ID", "Event Name", "Start Date", "End Date", "Venue"), tablefmt = "orgtbl"))
+
+
+
+
+        
 
     @docopt_cmd
     def do_delete_event(self, arg):
         """Usage: 
                 delete_event <event_id>
         """
-        print(division(arg['<numberA>'], arg['<numberB>']))
+        
 
     @docopt_cmd
     def do_edit_event(self, arg):
         """Usage: 
             edit_event <event_id> 
         """
-        print(multiplication(arg['<numberA>'], arg['<numberB>']))
+        
 
     @docopt_cmd
     def do_view_tickets(self,arg):
         """Usage: 
                 view_tickets <event_id>
         """
-        print(multiplication(arg['<numberA>'], arg['<numberB>']))
+        
 
 
 
