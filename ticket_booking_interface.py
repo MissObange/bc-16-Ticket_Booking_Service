@@ -112,7 +112,8 @@ class Event_actions(cmd.Cmd):
         """Usage: 
             view_event_tickets 
         """
-        print(tabulate(New_tickets.event_view(), headers =("Ticket ID", "Customer Name", "Customer e-mail"), tablefmt = "orgtbl"))
+        eventID = input("Event ID:  ")
+        print(tabulate(New_tickets.event_view(eventID), headers =("Ticket ID", "Customer Name", "Customer e-mail"), tablefmt = "orgtbl"))
 
 
     def do_quit(self, arg):
