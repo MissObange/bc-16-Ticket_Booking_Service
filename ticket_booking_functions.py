@@ -1,11 +1,11 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from ticket_booking_db_setup import event_details, ticket_details, Base
+from ticket_booking_db_setup import Event_details, Ticket_details, Base
 from datetime import datetime
+from tabulate import tabulate
 
 
-
-engine = create_engine('sqlite:///sqlalchemy_example.db')
+engine = create_engine('sqlite:///ticket_booking_DB.db')
 
 Base.metadata.bind = engine
  
@@ -15,35 +15,48 @@ session = DBSession()
 
 
 
-class new_events():
+class New_events():
 
 
-	def add_events(eventName, startDate, endDate, eventVenue):
+	def add_events(self, eventName, startDate, endDate, eventVenue):
 
-		if session.query(events).filter_by(event_name = eventName):
 
-			print("This event already exists")
+		events = Event_details(event_name = eventName, start_date= startDate, end_date= endDate, venue = eventVenue)
+		session.add(events)
+		session.commit()
+		# new_event = Event_details(event_name = eventName, start_date= startDate, end_date= endDate, venue = eventVenue)
+		 
+		# if session.query(Event_details).filter_by(event_name == eventName): 
 
-		else: 
-			new_event = events(event_name = eventName, start_date = startDate, end_date= endDate, venue = eventVenue)
-			session.append(event_name)
-			session.add(new_event)
-			session.commit()
+		# 	print("This event already exists")
 
+		# else: 
+			
+		# 	session.add(new_event)
+		# 	session.commit()
+		
 
 	def view_events_list():
 
-		for instance in session.query(events).order_by(evevnt_id):
+		for instance in session.query(Event_details).order_by(event_id):
 			print(instance.event_name, instance.start_date, instance.end_date, instance.venue)
 			session.commit()
 
 
 	def delete_event(selected_event):
 		
-		to_delete = events(event_id = selected_event)
+		to_delete = Event_details(event_id = selected_event)
 		session.delete(to_delete)
 		session.commit()
 
+
+	def edit_event(selected_event):
+
+		updated_event = Event_details(event_name = new_eventName, start_date = new_startDate, end_date= new_endDate, venue = new_eventVenue)
+		session.query(Event_details).filter_by(event_id).update(updated_event)
+
+			
+New_events()
 
 
 
