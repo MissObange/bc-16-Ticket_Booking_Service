@@ -40,21 +40,14 @@ class New_events():
 		
 		return list_events			
 
-
+	def delete_event(eventID):
 		
-
-
-	def delete_event(selected_event):
-		
-		to_delete = Event_details(event_id = selected_event)
+		to_delete = session.query(Event_details).filter_by(event_id = eventID).first()
 		session.delete(to_delete)
 		session.commit()
 
 
-	def edit_event(selected_event):
-
-		updated_event = Event_details(event_name = new_eventName, start_date = new_startDate, end_date= new_endDate, venue = new_eventVenue)
-		session.query(Event_details).filter_by(event_id).update(updated_event)
+	
 
 			
 New_events()
