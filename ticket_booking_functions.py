@@ -24,23 +24,24 @@ class New_events():
 		events = Event_details(event_name = eventName, start_date= startDate, end_date= endDate, venue = eventVenue)
 		session.add(events)
 		session.commit()
-		# new_event = Event_details(event_name = eventName, start_date= startDate, end_date= endDate, venue = eventVenue)
-		 
-		# if session.query(Event_details).filter_by(event_name == eventName): 
-
-		# 	print("This event already exists")
-
-		# else: 
-			
-		# 	session.add(new_event)
-		# 	session.commit()
 		
 
 	def view_events_list():
+		view_events_list = session.query(Event_details).all()
+		list_events = []
 
-		for instance in session.query(Event_details).order_by(event_id):
-			print(instance.event_name, instance.start_date, instance.end_date, instance.venue)
-			session.commit()
+		for item in view_events_list:
+			list_item = [item.event_id, item.event_name, item.start_date, item.end_date, item.venue]
+			list_events.append(list_item)
+			
+
+			if len(list_events)==0:
+				print ("There are no upcoming events currently stored in the database")
+		
+		return list_events			
+
+
+		
 
 
 	def delete_event(selected_event):
