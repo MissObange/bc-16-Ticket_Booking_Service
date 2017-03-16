@@ -3,7 +3,7 @@
 Usage:
     my_app add_event 
     my_app list_events 
-    my_app delete_event <event_id>
+    my_app delete_event 
     my_app edit_event <event_id>
     my_app view_tickets <event_id>
     my_app (-i | --interactive)
@@ -78,30 +78,15 @@ class Event_actions(cmd.Cmd):
         """
         print(tabulate(New_events.view_events_list(), headers =("Event ID", "Event Name", "Start Date", "End Date", "Venue"), tablefmt = "orgtbl"))
 
-
-
-
-        
-
     @docopt_cmd
     def do_delete_event(self, arg):
         """Usage: 
-                delete_event <event_id>
+                delete_event 
         """
-        
+        eventID = input("Event_id")
+        New_events.delete_event(eventID)
 
-    @docopt_cmd
-    def do_edit_event(self, arg):
-        """Usage: 
-            edit_event <event_id> 
-        """
-        
-
-    @docopt_cmd
-    def do_view_tickets(self,arg):
-        """Usage: 
-                view_tickets <event_id>
-        """
+   
         
 
 
