@@ -41,14 +41,14 @@ class New_events():
 			
 		return list_events
 
-	def event_delete(eventID):
-		to_delete = session.query(Event_details).filter_by(event_id = eventID).first()
+	def event_delete(event_id):
+		to_delete = session.query(Event_details).filter_by(event_id = event_id).first()
 		session.delete(to_delete)
 		session.commit()
 		return('Entry successfully deleted!')
 
-	def event_edit(event_ID):
-		to_edit = session.query(Event_details).filter_by(event_id = event_ID).first()
+	def event_edit(event_id):
+		to_edit = session.query(Event_details).filter_by(event_id = event_id).first()
 		new_name = input("Enter new name to change from '%s' (Enter '0' to leave as is):  "%(to_edit.event_name))
 		if new_name != 0:
 			to_edit.event_name = new_name
@@ -81,8 +81,8 @@ class New_tickets(New_events):
 		session.commit()
 		return "Ticket has been succesfully generated"
 
-	def event_view(eventID):
-		event_view = session.query(Ticket_details).filter_by(event_id = eventID)
+	def event_view(event_id):
+		event_view = session.query(Ticket_details).filter_by(event_id = event_id)
 		tickets_list = []
 
 		for item in event_view:
@@ -91,14 +91,18 @@ class New_tickets(New_events):
 
 			if len(tickets_list)==0:
 				return ("There are currently no tickets generated for this event")
-
-			
+		
 		return tickets_list
+
+	def ticket_invalidate(self, ticket_id):
+		invalidate = session.query(Ticket_details).filter_by(ticket_id = ticket_id).first()
+		session.delete(invalidate)
+		session.commit()
+
+		return "Ticket Invalidated"
 		
 
 
-New_events()
-New_tickets()
 
 
 	
