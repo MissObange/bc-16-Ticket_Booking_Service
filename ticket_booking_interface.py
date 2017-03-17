@@ -3,11 +3,12 @@
 Usage:
     my_app add_event 
     my_app list_events 
-    my_app delete_event 
+    my_app delete_event <event_id>
     my_app edit_event <event_id>
     my_app view_tickets <event_id>
     my_app ticket_generate 
-    my_app view_event_tickets
+    my_app view_event_tickets <event_id>
+    my_app invalidate_ticket <ticket_id>
     my_app (-i | --interactive)
     my_app (-h | --help)
 Options:
@@ -83,16 +84,15 @@ class Event_actions(cmd.Cmd):
     @docopt_cmd
     def do_delete_event(self, arg):
         """Usage: 
-                delete_event 
+                delete_event <event_id>
         """
-        eventID = input("Event_id")
-        print(New_events.event_delete(eventID))
+        print(New_events.event_delete(arg["<event_id>"]))
 
    
     @docopt_cmd
     def do_edit_event(self, arg):
         """Usage: 
-            edit_event 
+            edit_event <event_id>
         """
         print(New_events.event_edit(arg["<event_id>"]))
 
@@ -110,10 +110,17 @@ class Event_actions(cmd.Cmd):
     @docopt_cmd
     def do_view_event_tickets(self, arg):
         """Usage: 
-            view_event_tickets 
+            view_event_tickets <event_id>
         """
-        eventID = input("Event ID:  ")
-        print(tabulate(New_tickets.event_view(eventID), headers =("Ticket ID", "Customer Name", "Customer e-mail"), tablefmt = "orgtbl"))
+        print(tabulate(New_tickets.event_view(arg["<event_id>"]), headers =("Ticket ID", "Customer Name", "Customer e-mail"), tablefmt = "orgtbl"))
+
+    @docopt_cmd
+    def do_invalidate_ticket(self,arg):
+        """Usage: 
+            invalidate_ticket <ticket_id> 
+        """
+        print(New_tickets().ticket_invalidate(arg["<ticket_id>"]))
+
 
 
     def do_quit(self, arg):
